@@ -1,5 +1,6 @@
 <?php
 namespace Ratchet\WebSocket;
+use Nyholm\Psr7\Factory\Psr17Factory;
 use Ratchet\ComponentInterface;
 use Ratchet\ConnectionInterface;
 use Ratchet\MessageComponentInterface as DataComponentInterface;
@@ -86,7 +87,7 @@ class WsServer implements HttpServerInterface {
         $this->connections = new \SplObjectStorage;
 
         $this->closeFrameChecker   = new CloseFrameChecker;
-        $this->handshakeNegotiator = new ServerNegotiator(new RequestVerifier);
+        $this->handshakeNegotiator = new ServerNegotiator(new RequestVerifier, new Psr17Factory());
         $this->handshakeNegotiator->setStrictSubProtocolCheck(true);
 
         if ($component instanceof WsServerInterface) {
